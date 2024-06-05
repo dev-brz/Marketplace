@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Client, Stomp } from '@stomp/stompjs';
-import { tap, timer } from 'rxjs';
+import { Client } from '@stomp/stompjs';
+import { timer } from 'rxjs';
 import SockJS from 'sockjs-client';
 
 @Component({
