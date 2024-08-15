@@ -9,17 +9,24 @@ import SockJS from 'sockjs-client';
   standalone: true,
   imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit, OnDestroy {
-  stomp = new Client({ webSocketFactory: () => new SockJS(`http://localhost:8080/ws`) });
+  stomp = new Client({
+    webSocketFactory: () => new SockJS(`http://localhost:8080/ws`),
+  });
 
   ngOnInit(): void {
     this.stomp.onConnect = () => {
-      this.stomp.subscribe('/topic/chat/broadcast', message => console.log(`Received ${message.body}`));
+      this.stomp.subscribe('/topic/chat/broadcast', (message) =>
+        console.log(`Received ${message.body}`),
+      );
 
       timer(3000).subscribe(() => {
-        const frame = { destination: '/app/chat', body: JSON.stringify({ content: 'hello world' }) };
+        const frame = {
+          destination: '/app/chat',
+          body: JSON.stringify({ content: 'hello world' }),
+        };
         this.stomp.publish(frame);
       });
     };
